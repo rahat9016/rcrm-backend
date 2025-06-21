@@ -1,4 +1,9 @@
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class UsersService {}
+export class UsersService {
+  // constructor(private prisma: PrismaService) {}
+  // create(createUserDto: CreateUserDto) {
+  //   return createUserDto;
+  // }
+}

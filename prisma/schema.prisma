@@ -22,13 +22,13 @@ enum UserRole {
 }
 
 model User {
-  id String @id @default(uuid())
-  email String @unique
+  id           String   @id @default(uuid())
+  email        String   @unique
   passwordHash String
-  fullName String
-  role UserRole @default(WAITER)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt 
+  fullName     String
+  role         UserRole @default(WAITER)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   @@map("users")
-} 
+}
