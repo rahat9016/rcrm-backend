@@ -1,18 +1,18 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { INestApplication, Injectable, OnModuleInit } from '@nestjs/common';
+import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 
 @Injectable()
-export class PrismaService extends PrismaClient implements OnModuleInit {
-  async onModuleInit() {
-    await this.$connect();
-    console.log('✅ Prisma connected successfully!');
+export class PrismaService
+  extends PrismaClient
+  implements OnModuleInit, OnModuleDestroy
+{
+  async onModuleInit(): Promise<void> {
+    await super.$connect();
   }
 
-  enableShutdownHooks(app: INestApplication): void {
-    this.$on('beforeExit', async () => {
-      await app.close();
-      console.log('⚠️ Prisma connection is about to close.');
-    });
+  async onModuleDestroy() {
+    await this.$disconnect();
   }
 }
