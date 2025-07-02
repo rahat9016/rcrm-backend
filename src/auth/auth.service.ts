@@ -1,23 +1,44 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { Role } from 'generated/prisma';
 import { PrismaService } from 'src/prisma.service';
 import { RegisterDto } from './dto/register.dto';
-import { SignupResponse } from './user';
 
 @Injectable()
 export class AuthService {
   constructor(private prisma: PrismaService) {}
-  async signup(payload: RegisterDto): Promise<SignupResponse> {
-    const hash = await this.encryptPassword(payload.password);
-    payload.password = hash;
+  async signup(payload: RegisterDto) {
+    const existingUser = await this.prisma.user.findUnique({
+      where: { email: payload.email },
+    });
+    if (existingUser)
+      throw new BadRequestException('Email already registered', {
+        cause: new Error(),
+        description:
+          'Your email already in registered, please provide new email',
+      });
 
-    return this.prisma.user.create({
-      data: payload,
+    const data = {
+      ...payload,
+      role: payload.role as Role,
+      password: await this.encryptPassword(payload.password),
+    };
+    const user = await this.prisma.user.create({
+      data: data,
       select: {
         email: true,
-        id: true,
+        name: true,
+        role: true,
       },
     });
+    return {
+      statusCode: 201,
+      success: true,
+      message: 'Registration successful',
+      data: {
+        user,
+      },
+    };
   }
 
   private async encryptPassword(password: string): Promise<string> {

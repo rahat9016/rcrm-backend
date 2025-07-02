@@ -15,18 +15,20 @@ datasource db {
 }
 
 enum Role {
-  admin
-  waiter
-  cashier
-  kitchen
+  ADMIN
+  WAITER
+  KITCHEN
+  CASHIER
 }
+
 
 model User {
   id        String   @unique @default(uuid())
   name      String
   email     String   @unique
+  phone     String?  @unique
   password  String
-  role      Role     @default(waiter)
+  role      Role     @default(WAITER)
   createdAt DateTime @default(now())
 
   @@map("users")
