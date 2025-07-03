@@ -15,10 +15,7 @@ const JWT_REFRESH_SECRET =
   process.env.JWT_REFRESH_SECRET || 'your_refresh_secret';
 @Injectable()
 export class AuthService {
-  constructor(
-    private prisma: PrismaService,
-    // private jwtService: JwtService,
-  ) {}
+  constructor(private prisma: PrismaService) {}
   async register(payload: RegisterDto) {
     const existingUser = await this.prisma.user.findUnique({
       where: { email: payload.email },

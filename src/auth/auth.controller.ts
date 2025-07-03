@@ -79,45 +79,45 @@ export class AuthController {
       },
     },
   })
-  @ApiResponse({
-    status: 400,
-    description: 'Validation error',
-    schema: {
-      example: {
-        success: false,
-        statusCode: 400,
-        message: 'Validation failed',
-        errors: {
-          email: 'Email must be valid',
-          password: 'Password is required',
-        },
-      },
-    },
-  })
-  @ApiResponse({
-    status: 401,
-    description: 'Unauthorized / Invalid credentials',
-    schema: {
-      example: {
-        success: false,
-        statusCode: 401,
-        message: 'Invalid credentials',
-        errors: {},
-      },
-    },
-  })
-  @ApiResponse({
-    status: 500,
-    description: 'Server error',
-    schema: {
-      example: {
-        success: false,
-        statusCode: 500,
-        message: 'Internal server error',
-        errors: {},
-      },
-    },
-  })
+  // @ApiResponse({
+  //   status: 400,
+  //   description: 'Validation error',
+  //   schema: {
+  //     example: {
+  //       success: false,
+  //       statusCode: 400,
+  //       message: 'Validation failed',
+  //       errors: {
+  //         email: 'Email must be valid',
+  //         password: 'Password is required',
+  //       },
+  //     },
+  //   },
+  // })
+  // @ApiResponse({
+  //   status: 401,
+  //   description: 'Unauthorized / Invalid credentials',
+  //   schema: {
+  //     example: {
+  //       success: false,
+  //       statusCode: 401,
+  //       message: 'Invalid credentials',
+  //       errors: {},
+  //     },
+  //   },
+  // })
+  // @ApiResponse({
+  //   status: 500,
+  //   description: 'Server error',
+  //   schema: {
+  //     example: {
+  //       success: false,
+  //       statusCode: 500,
+  //       message: 'Internal server error',
+  //       errors: {},
+  //     },
+  //   },
+  // })
   login(@Body() loginUserDto: LoginDto) {
     return this.authService.login(loginUserDto);
   }
